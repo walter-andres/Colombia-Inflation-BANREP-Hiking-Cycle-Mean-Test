@@ -23,17 +23,34 @@
 
 The elevated‑rate regime coincides with structurally higher realized monthly inflation. This is an association across policy regimes, **not** a causal estimate of the rate's effect on inflation.
 
+## Revalidation with the **daily** policy rate (`analysis_daily_revalidation.ipynb`)
+
+The result is re‑derived from **Data2 — the daily policy rate** (`Tasa de política monetaria, Dato diario`), converted to monthly frequency by **monthly average** (preferred) and **end‑of‑month** (alternative). Inflation is independently reconstructed from the daily file's IPC *index level*. **The original finding is confirmed.**
+
+| Source / conversion | Cycle start | Mean before | Mean after | Welch *p* | Decision |
+|---|---|---|---|---|---|
+| Monthly file (EoM) — primary | 2021‑10 | 0.44 % | 0.65 % | 0.0015 | Reject H₀ |
+| **Daily → monthly average** | 2021‑10 | 0.43 % | 0.65 % | **0.0008** | Reject H₀ |
+| Daily → end‑of‑month | 2021‑10 | 0.43 % | 0.65 % | 0.0008 | Reject H₀ |
+| Daily average — 24m windows | 2021‑10 | 0.27 % | 0.49 % | 0.023 | Reject H₀ |
+
+Validation of the daily→monthly build: derived inflation vs. DANE `variación mensual` **corr = 0.9999** (max diff 0.02 p.p.); rebuilt end‑of‑month rate reproduces the monthly file **exactly**; monthly‑average vs. end‑of‑month rate **corr = 0.999**, same cycle dates. The conversion method is immaterial to the conclusion.
+
 ## Repository layout
 
 ```
 .
-├── analysis.ipynb        # full, executed analysis (start here)
+├── analysis.ipynb                    # primary analysis — monthly source file (start here)
+├── analysis_daily_revalidation.ipynb # revalidation from the DAILY policy rate
 ├── data/
-│   ├── datos.csv         # monthly policy rate + IPC monthly inflation (BANREP/DANE)
-│   └── informacion.csv   # series metadata / descriptions
-├── fig_timeseries.png    # policy rate vs. inflation, cycle shaded
-├── fig_distributions.png # inflation by regime (boxplot) + window means
-├── fig_seasonal.png      # seasonally matched monthly inflation
+│   ├── datos.csv          # monthly policy rate + IPC monthly inflation (BANREP/DANE)
+│   ├── datos_daily.csv    # DAILY policy rate + end-of-month IPC index level
+│   └── informacion.csv    # series metadata / descriptions
+├── fig_timeseries.png              # policy rate vs. inflation, cycle shaded
+├── fig_distributions.png           # inflation by regime (boxplot) + window means
+├── fig_seasonal.png                # seasonally matched monthly inflation
+├── fig_daily_rate_conversions.png  # daily rate + monthly-average + end-of-month overlay
+├── fig_daily_distributions.png     # daily-derived inflation by regime
 ├── requirements.txt
 └── README.md
 ```
@@ -49,4 +66,4 @@ jupyter nbconvert --to notebook --execute --inplace analysis.ipynb
 
 ## Data source
 
-Banco de la República (policy rate) and DANE (IPC), downloaded July 2026. Monthly sample **Feb‑1998 → Jun‑2026**.
+Banco de la República (policy rate; monthly `Dato fin de mes` and daily `Dato diario`) and DANE (IPC). Downloaded July 2026. Monthly sample **Feb‑1998 → Jun‑2026**; daily sample **13‑Feb‑1998 → 26‑Jul‑2026**.
