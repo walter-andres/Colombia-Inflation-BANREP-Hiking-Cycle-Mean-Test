@@ -36,12 +36,21 @@ The result is re‑derived from **Data2 — the daily policy rate** (`Tasa de po
 
 Validation of the daily→monthly build: derived inflation vs. DANE `variación mensual` **corr = 0.9999** (max diff 0.02 p.p.); rebuilt end‑of‑month rate reproduces the monthly file **exactly**; monthly‑average vs. end‑of‑month rate **corr = 0.999**, same cycle dates. The conversion method is immaterial to the conclusion.
 
+## Inflation cycles chart
+
+`make_inflation_cycles_chart.py` produces `fig_inflation_cycles.png`, which reveals Colombia's inflation cycles: **year-over-year IPC inflation** with the BANREP 3% ±1% target band, alternating peak-to-peak shading, and auto-detected turning points (`scipy.signal.find_peaks`). Six cycles stand out — peaks in 2000, 2003, 2008, 2011, 2016 and the post-pandemic **13.3% (Mar-2023)**; troughs down to **1.5% (Nov-2020)**.
+
+```bash
+python make_inflation_cycles_chart.py
+```
+
 ## Repository layout
 
 ```
 .
 ├── analysis.ipynb                    # primary analysis — monthly source file (start here)
 ├── analysis_daily_revalidation.ipynb # revalidation from the DAILY policy rate
+├── make_inflation_cycles_chart.py    # builds the inflation-cycles chart
 ├── data/
 │   ├── datos.csv          # monthly policy rate + IPC monthly inflation (BANREP/DANE)
 │   ├── datos_daily.csv    # DAILY policy rate + end-of-month IPC index level
@@ -51,6 +60,7 @@ Validation of the daily→monthly build: derived inflation vs. DANE `variación 
 ├── fig_seasonal.png                # seasonally matched monthly inflation
 ├── fig_daily_rate_conversions.png  # daily rate + monthly-average + end-of-month overlay
 ├── fig_daily_distributions.png     # daily-derived inflation by regime
+├── fig_inflation_cycles.png        # YoY inflation cycles: peaks, troughs, target band
 ├── requirements.txt
 └── README.md
 ```
