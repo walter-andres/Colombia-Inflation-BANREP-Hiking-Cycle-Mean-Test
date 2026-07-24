@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Jupyter / IPython / Matplotlib local caches
+.ipynb_checkpoints/
+.jupyter/
+.ipython/
+.mplcache/
+
+# OS
+.DS_Store
+
+# scratch
+_run.py
